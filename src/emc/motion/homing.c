@@ -191,7 +191,6 @@ static bool home_do_moving_checks(int jno)
         }
     }
     /* check for reached end of move */
-        /* check for reached end of move */
     if (! (&joints[jno])->free_tp.active) {
         /* reached end of move without hitting switch */
          (&joints[jno])->free_tp.enable = 0;
