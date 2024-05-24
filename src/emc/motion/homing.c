@@ -191,11 +191,16 @@ static bool home_do_moving_checks(int jno)
         }
     }
     /* check for reached end of move */
+        /* check for reached end of move */
     if (! (&joints[jno])->free_tp.active) {
         /* reached end of move without hitting switch */
          (&joints[jno])->free_tp.enable = 0;
-        rtapi_print_msg(RTAPI_MSG_ERR,_("j%d end of move in home state %d"),jno, H[jno].home_state);
-        H[jno].home_state = HOME_ABORT;
+        rtapi_print_msg(RTAPI_MSG_ERR,_("j%d end of move in home state %d, homing aborted"),jno, H[jno].home_state);
+        for (int j = 0; j < all_joints; j++) {
+            if (!H[j].homed) {
+                H[j].home_state = HOME_ABORT;
+            }
+        }
         return 1; // abort reqd
     }
     return 0;
